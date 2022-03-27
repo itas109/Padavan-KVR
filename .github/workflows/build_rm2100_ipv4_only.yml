@@ -37,7 +37,7 @@ jobs:
       run: |
         CURRENT_PWD=`pwd`
         echo "CURRENT_PWD: ${CURRENT_PWD}"
-        ls -l ${CURRENT_PWD}"
+        ls -l ${CURRENT_PWD}
         cd toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
