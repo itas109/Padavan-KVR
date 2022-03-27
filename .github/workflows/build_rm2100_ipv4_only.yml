@@ -35,14 +35,15 @@ jobs:
         
     - name: get source code
       run: |
+        CURRENT_PWD=`pwd`
         cd toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
         
     - name: config
       run: |
-        cwd=`pwd`
-        CONFIG_TOOLCHAIN_DIR=${cwd//\//\\\/}\\/toolchain-mipsel
+        cd ${CURRENT_PWD}
+        CONFIG_TOOLCHAIN_DIR=${CURRENT_PWD//\//\\\/}\\/toolchain-mipsel
         cd trunk
         if [ ! -f configs/templates/$TARGET_NAME.config ] ; then
         echo "configs/templates/${TARGET_NAME}.config not found"
