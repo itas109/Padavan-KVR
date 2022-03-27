@@ -1,10 +1,10 @@
 name: Build RM2100 ipv4 only
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
 jobs:
   build:
@@ -13,12 +13,11 @@ jobs:
     
     steps:
     - name: Checkout
-      uses: actions/cache@v2
+      uses: actions/checkout@master
 
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
-        WORK_PATH: /opt/rt-n56u
         TIME_ZONE: Asia/Shanghai
         TARGET_NAME: RM2100
         FIRMWARE_DATEPREFIX: $(date +"%Y%m%d")
@@ -30,7 +29,7 @@ jobs:
         pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
         sudo timedatectl set-timezone "$TIME_ZONE"
         
-    - name: Clone source code
+    - name: get source code
       run: |
         cd toolchain-mipsel
         sh dl_toolchain.sh
@@ -168,7 +167,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       if: steps.organize.outputs.status == 'success'
       with:
-        repo_token: ${{ secrets.R_TOKEN }}
+        repo_token: ${{ secrets.ACCESS_TOKEN }}
         file: /opt/images/*.trx
         tag: AtuoBuild
         overwrite: true
