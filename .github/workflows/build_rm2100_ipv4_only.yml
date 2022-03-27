@@ -10,6 +10,12 @@ on:
  watch:
    types: [started]
 
+env:
+ TIME_ZONE: Asia/Shanghai
+ TARGET_NAME: RM2100
+ IMAGS_PATH: /opt/images/
+ FIRMWARE_DATEPREFIX: $(date +"%Y%m%d")
+
 jobs:
   build:
 
@@ -20,12 +26,6 @@ jobs:
       uses: actions/checkout@master
 
     - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-        TIME_ZONE: Asia/Shanghai
-        TARGET_NAME: RM2100
-        FIRMWARE_DATEPREFIX: $(date +"%Y%m%d")
-        FIRMWARE_PATH: /opt/firmwares
       run: |
         sudo apt-get update
         sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot kmod \
@@ -164,14 +164,14 @@ jobs:
         sudo ./clear_tree
         sudo ./build_firmware_modify $TARGET_NAME 0
         echo "FIRMWARE_DATEPREFIX=$(date +"%Y%m%d")" >> $GITHUB_ENV
-        sudo mv -f images/*.trx /opt/images/
+        sudo mv -f images/*.trx $IMAGS_PATH
         
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v1-release
       if: steps.organize.outputs.status == 'success'
       with:
         repo_token: ${{ secrets.ACCESS_TOKEN }}
-        file: /opt/images/*.trx
+        file: $IMAGS_PATH/*.trx
         tag: AtuoBuild
         overwrite: true
         file_glob: true
