@@ -85,6 +85,7 @@ jobs:
         #以下选项是定义你需要的功能（y=集成,n=忽略），重新写入到.config文件
         ######################################################################
         # 基本命令开始
+        sed -i 's/CONFIG_FIRMWARE_ENABLE_IPV6=y/CONFIG_FIRMWARE_ENABLE_IPV6=n/g' .config # ipv6
         sed -i 's/CONFIG_FIRMWARE_INCLUDE_TCPDUMP=y/CONFIG_FIRMWARE_INCLUDE_TCPDUMP=n/g' .config # tcpdump
         sed -i 's/CONFIG_FIRMWARE_INCLUDE_SMBD36=y/CONFIG_FIRMWARE_INCLUDE_SMBD36=n/g' .config # smbd36
         sed -i 's/CONFIG_FIRMWARE_INCLUDE_OPENVPN=y/CONFIG_FIRMWARE_INCLUDE_OPENVPN=n/g' .config # openvpn
@@ -155,23 +156,24 @@ jobs:
         #sed -i '/自定义项/d' .config
         #echo "自定义项=y" >> .config
         #########################################################################################
+        cat .config
         
     - name: Build Firmware
       run: |
         cd trunk
         sed -i '/^CONFIG_TOOLCHAIN_DIR=/cCONFIG_TOOLCHAIN_DIR=$(pwd)\/toolchain-mipsel' .config
-        cat .config
         sudo ./clear_tree
         sudo ./build_firmware_modify $TARGET_NAME 0
         echo "FIRMWARE_DATEPREFIX=$(date +"%Y%m%d")" >> $GITHUB_ENV
-        sudo mv -f images/*.trx $IMAGS_PATH
-        
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v1-release
-      if: steps.organize.outputs.status == 'success'
+        sudo cp -f images/*.trx $IMAGS_PATH
+        sudo cp -f .config $IMAGS_PATH
+
+    - name: Upload Binaries to Release
+      uses: svenstaro/upload-release-action@v2
       with:
-        repo_token: ${{ secrets.ACCESS_TOKEN }}
-        file: $IMAGS_PATH/*.trx
-        tag: AtuoBuild
-        overwrite: true
-        file_glob: true
+          repo_token: ${{ secrets.ACCESS_TOKEN }}
+          file: $IMAGS_PATH/*
+          tag: AtuoBuild
+          body: autobuild
+          overwrite: true
+          file_glob: true
