@@ -177,7 +177,9 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.ACCESS_TOKEN }}
-          file: /opt/images/*
+          file: |
+              /opt/images/*.trx
+              /opt/images/.config
           tag: AtuoBuild
           body: autobuild
           overwrite: true
