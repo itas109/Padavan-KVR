@@ -43,11 +43,11 @@ jobs:
       run: |
         CONFIG_TOOLCHAIN_DIR=${CURRENT_PWD//\//\\\/}\\/toolchain-mipsel
         cd trunk
-        if [ ! -f configs/templates/${TARGET_NAME}.config ] ; then
-        echo "configs/templates/${TARGET_NAME}.config not found"
+        if [ ! -f configs/templates/$TARGET_NAME.config ] ; then
+        echo "configs/templates/$TARGET_NAME.config not found"
         exit 1
         fi
-        cp -f configs/templates/${TARGET_NAME}.config .config
+        cp -f configs/templates/$TARGET_NAME.config .config
         ################################################################################################
         #因不同型号配置功能不一样，所以先把配置项删除，如果你自己要添加其他的，也要写上删除这一条，切记！！！
         ################################################################################################
