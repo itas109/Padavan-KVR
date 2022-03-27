@@ -165,6 +165,7 @@ jobs:
         #sudo ./clear_tree
         #sudo ./build_firmware_modify $TARGET_NAME 0
         echo "FIRMWARE_DATEPREFIX=$(date +"%Y%m%d")" >> $GITHUB_ENV
+        mkdir images
         touch images/abc.trx
         sudo cp -f images/*.trx $IMAGS_PATH
         sudo cp -f .config $IMAGS_PATH
