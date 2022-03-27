@@ -37,7 +37,7 @@ jobs:
       run: |
         cd toolchain-mipsel
         sh dl_toolchain.sh
-        mkdir -p /opt/images/
+        mkdir -p $IMAGS_PATH
         
     - name: Config
       run: |
@@ -162,11 +162,14 @@ jobs:
       run: |
         cd trunk
         sed -i '/^CONFIG_TOOLCHAIN_DIR=/cCONFIG_TOOLCHAIN_DIR=$(pwd)\/toolchain-mipsel' .config
-        sudo ./clear_tree
-        sudo ./build_firmware_modify $TARGET_NAME 0
+        #sudo ./clear_tree
+        #sudo ./build_firmware_modify $TARGET_NAME 0
         echo "FIRMWARE_DATEPREFIX=$(date +"%Y%m%d")" >> $GITHUB_ENV
         sudo cp -f images/*.trx $IMAGS_PATH
         sudo cp -f .config $IMAGS_PATH
+        ls -l images
+        ls -l .config
+        ls -l $IMAGS_PATH
 
     - name: Upload Binaries to Release
       uses: svenstaro/upload-release-action@v2
