@@ -44,8 +44,10 @@ jobs:
         
     - name: config
       run: |
+        echo "pwd: `pwd`"
+        echo "CURRENT_PWD: ${CURRENT_PWD}"
         CONFIG_TOOLCHAIN_DIR=${CURRENT_PWD//\//\\\/}\\/toolchain-mipsel
-        cd ${CURRENT_PWD}/trunk
+        cd trunk
         if [ ! -f configs/templates/$TARGET_NAME.config ] ; then
         echo "configs/templates/${TARGET_NAME}.config not found"
         exit 1
