@@ -37,15 +37,15 @@ jobs:
       run: |
         CURRENT_PWD=`pwd`
         echo "CURRENT_PWD: ${CURRENT_PWD}"
+        ls -l ${CURRENT_PWD}"
         cd toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
         
     - name: config
       run: |
-        cd ${CURRENT_PWD}
         CONFIG_TOOLCHAIN_DIR=${CURRENT_PWD//\//\\\/}\\/toolchain-mipsel
-        cd trunk
+        cd ${CURRENT_PWD}/trunk
         if [ ! -f configs/templates/$TARGET_NAME.config ] ; then
         echo "configs/templates/${TARGET_NAME}.config not found"
         exit 1
