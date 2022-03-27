@@ -168,16 +168,25 @@ jobs:
         mkdir images
         touch images/abc.trx
         sudo cp -f images/*.trx $IMAGS_PATH
-        sudo cp -f .config $IMAGS_PATH
+        sudo cp -f .config $IMAGS_PATH/$TARGET_NAME.config
         ls -l images
         ls -l .config
         ls -a $IMAGS_PATH
-
+    
     - name: Upload Binaries to Release
-      uses: svenstaro/upload-release-action@2.2.1
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-          repo_token: ${{ secrets.ACCESS_TOKEN }}
-          file: /opt/images/.config
-          tag: AtuoBuild
-          body: autobuild
-          overwrite: true
+          repo_token: "${{ secrets.ACCESS_TOKEN }}"
+          prerelease: false
+          files: |
+            $IMAGS_PATH/*.trx
+            $IMAGS_PATH/$TARGET_NAME.config
+
+#     - name: Upload Binaries to Release 2
+#       uses: svenstaro/upload-release-action@2.2.1
+#       with:
+#           repo_token: ${{ secrets.ACCESS_TOKEN }}
+#           file: /opt/images/*.trx
+#           tag: AtuoBuild
+#           body: autobuild
+#           overwrite: true
