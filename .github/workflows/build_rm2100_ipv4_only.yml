@@ -171,7 +171,7 @@ jobs:
         sudo cp -f .config $IMAGS_PATH
         ls -l images
         ls -l .config
-        ls -l $IMAGS_PATH
+        ls $IMAGS_PATH
 
     - name: Upload Binaries to Release
       uses: svenstaro/upload-release-action@v2
@@ -181,4 +181,3 @@ jobs:
           tag: AtuoBuild
           body: autobuild
           overwrite: true
-          file_glob: true
