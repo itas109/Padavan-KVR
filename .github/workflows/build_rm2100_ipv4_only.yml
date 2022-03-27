@@ -177,12 +177,12 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
           repo_token: "${{ secrets.ACCESS_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "AtuoBuild"
           prerelease: false
-          title: "Development Build"
+          title: "AtuoBuild"
           files: |
-            $IMAGS_PATH/*.trx
-            $IMAGS_PATH/$TARGET_NAME.config
+            /opt/images/*.trx
+            /opt/images/*.config
 
 #     - name: Upload Binaries to Release 2
 #       uses: svenstaro/upload-release-action@2.2.1
