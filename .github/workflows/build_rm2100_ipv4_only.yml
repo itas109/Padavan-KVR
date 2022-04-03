@@ -173,7 +173,7 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
           repo_token: "${{ secrets.ACCESS_TOKEN }}"
-          automatic_release_tag: "AtuoBuild"
+          automatic_release_tag: $(date +"%Y%m%d")
           prerelease: false
           title: "AtuoBuild"
           files: |
@@ -185,6 +185,6 @@ jobs:
 #       with:
 #           repo_token: ${{ secrets.ACCESS_TOKEN }}
 #           file: /opt/images/*.trx
-#           tag: AtuoBuild
-#           body: autobuild
+#           tag: AtuoBuild$(date +"%Y%m%d")
+#           body: autobuild $(date +"%Y%m%d")
 #           overwrite: true
