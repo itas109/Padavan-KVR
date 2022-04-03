@@ -164,7 +164,7 @@ jobs:
         sed -i '/^CONFIG_TOOLCHAIN_DIR=/cCONFIG_TOOLCHAIN_DIR=$(pwd)\/toolchain-mipsel' .config
         sudo ./clear_tree
         sudo ./build_firmware_modify $TARGET_NAME 0
-        echo "FIRMWARE_DATEPREFIX=$(date +"%Y%m%d")" >> $GITHUB_ENV
+        echo "RELEASE_TAG=AtuoBuild-$(date +"%Y%m%d")" >> $GITHUB_ENV
         sudo cp -f images/*.trx $IMAGS_PATH
         sudo cp -f .config $IMAGS_PATH/$TARGET_NAME.config
         ls -a $IMAGS_PATH
@@ -173,9 +173,9 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
           repo_token: "${{ secrets.ACCESS_TOKEN }}"
-          automatic_release_tag: $(date +"%Y%m%d")
+          automatic_release_tag: "${{env.RELEASE_TAG}}"
           prerelease: false
-          title: "AtuoBuild"
+          title: "${{env.RELEASE_TAG}}"
           files: |
             /opt/images/*.trx
             /opt/images/*.config
