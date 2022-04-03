@@ -165,7 +165,7 @@ jobs:
         sudo ./clear_tree
         sudo ./build_firmware_modify $TARGET_NAME 0
         echo "RELEASE_TAG=AtuoBuild-$(date +"%Y%m%d")" >> $GITHUB_ENV
-        find . -name "*.trx" | xargs -t -i cp {} $IMAGS_PATH/{}-$(date +"%Y%m%d")
+        sudo cp -f images/$TARGET_NAME_3.4.3.9-099.trx $IMAGS_PATH/$TARGET_NAME_3.4.3.9-099-$(date +"%Y%m%d").trx
         sudo cp -f .config $IMAGS_PATH/$TARGET_NAME.config
         ls -a $IMAGS_PATH
     
